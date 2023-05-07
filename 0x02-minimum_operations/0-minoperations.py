@@ -17,12 +17,13 @@ def minOperations(n):
 
     x = 2
     count = []
-    while x**2 < n:
-         if (n % x == 0):
-             count.append(x)
-             n //= x
-         else:
-             x += 1
+    while x ** 2 < n:
+        if (n % x == 0):
+            count.append(x)
+            n //= x
+        else:
+            x += 1
+
     if (n > 1):
         count.append(n)
 
