@@ -17,7 +17,7 @@ def minOperations(n):
 
     x = 2
     count = []
-    while x <= int(n** 0.5):
+    while x <= int(n ** 0.5):
         if (n % x == 0):
             count.append(x)
             n //= x
