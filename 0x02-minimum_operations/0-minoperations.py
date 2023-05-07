@@ -12,13 +12,18 @@ def minOperations(n):
 
     Returns: count of operations
     """
-    count = 1
-    while n > 0:
-        if (n % 2 == 0):
-            n = n / 2
-        else:
-            n = n - 1
+    if n == 1:
+        return 0
 
-        count += 1
+    x = 2
+    count = []
+    while x**2 < n:
+         if (n % x == 0):
+             count.append(x)
+             n //= x
+         else:
+             x += 1
+    if (n > 1):
+        count.append(n)
 
-    return count
+    return sum(count)
