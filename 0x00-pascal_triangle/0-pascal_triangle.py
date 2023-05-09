@@ -5,7 +5,7 @@ representing the Pascal's Triangle of n
 """
 
 
-def pascal_triangle(n: int) -> list[list[int]]:
+def pascal_triangle(n):
     """
     returns a list of lists of integers representing
     pascal's triangle
