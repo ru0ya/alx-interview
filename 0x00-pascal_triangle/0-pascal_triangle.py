@@ -2,10 +2,7 @@
 """Pascal's Triangle"""
 
 
-from typing import List
-
-
-def pascal_triangle(n: int) -> List[List[int]]:
+def pascal_triangle(n: int) -> list[list[int]]:
     """
     returns a list of lists of integers representing
     pascal's triangle
@@ -15,7 +12,7 @@ def pascal_triangle(n: int) -> List[List[int]]:
     Returns: List of lists of integers
     """
     if n <= 0:
-        return 0;
+        return 0
     else:
         tri = [[1]]
 
