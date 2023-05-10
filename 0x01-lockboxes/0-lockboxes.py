@@ -10,16 +10,22 @@ def canUnlockAll(boxes):
     """
     determines whether n boxes can be opened
 
-    Parameters: boxes
+    Parameters: boxes(list of lists)
 
-    Returns: true if all boxes can be unlocked
+    Returns: true if all boxes can be unlocked else false
     """
-    n = len(boxes)
+    n = len(boxes)  # number of boxes
     unlocked_boxes = [0]  # start with the first box unlocked
+    opened = set()  # tracks opened boxes
 
-    for box in unlocked_boxes:
-        for key in boxes[box]:
-            if key not in unlocked_boxes:
-                unlocked_boxes.append(key)
+    while unlocked_boxes:
+        current_box = unlocked_boxes.pop()  # get index of current box
 
-    return len(unlocked_boxes) == n
+        if current_box >= 0 and current_box < n:
+            opened.add(current_box)  # add box to opened set
+
+        for key in boxes[current_box]:
+            if key not in opened and key < n:  # if key is valid and not opened
+                unlocked_boxes.append(key)  # add it to unlocked boxes list
+
+    return len(opened) == n
