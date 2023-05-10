@@ -16,6 +16,7 @@ def canUnlockAll(boxes):
     """
     n = len(boxes)  # number of boxes
     unlocked_boxes = [0]  # start with the first box unlocked
+    keys_obtained = set([0])  # tracks obtained keys
     opened = set()  # tracks opened boxes
 
     while unlocked_boxes:
@@ -25,7 +26,9 @@ def canUnlockAll(boxes):
             opened.add(current_box)  # add box to opened set
 
         for key in boxes[current_box]:
-            if key not in opened and key < n:  # if key is valid and not opened
-                unlocked_boxes.append(key)  # add it to unlocked boxes list
+            if key < n:
+                keys_obtained.add(key)  # add key to obtained keys set
+                if key not in opened:
+                    unlocked_boxes.append(key)  # add key to unlocked boxes list
 
-    return len(opened) == n
+    return len(opened) == n and len(keys_obtained) == n
