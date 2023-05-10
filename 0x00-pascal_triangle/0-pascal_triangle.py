@@ -21,12 +21,12 @@ def pascal_triangle(n):
     tri = [[1]]
 
     # generates the subsequent rows
-    for i in range(n -1):
-        temp = [0] + tri[-1] + [0]  # each row starts and ends with 0
+    for i in range(n - 1):
+        temp = [0] + tri[- 1] + [0]  # each row starts and ends with 0
         row = []
 
         # sums each pair of adjacent numbers to get num in new row
-        for j in range(len(tri[-1]) + 1):
+        for j in range(len(tri[- 1]) + 1):
             row.append(temp[j] + temp[j + 1])  # add adjacent numbers
         tri.append(row)
     return tri
