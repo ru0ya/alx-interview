@@ -27,8 +27,10 @@ def canUnlockAll(boxes):
 
         for key in boxes[current_box]:
             if key < n:
-                keys_obtained.add(key)  # add key to obtained keys set
+                # add key to obtained keys set
+                keys_obtained.add(key)
                 if key not in opened:
-                    unlocked_boxes.append(key)  # add key to unlocked boxes list
+                    # add key to unlocked boxes list
+                    unlocked_boxes.append(key)
 
     return len(opened) == n and len(keys_obtained) == n
