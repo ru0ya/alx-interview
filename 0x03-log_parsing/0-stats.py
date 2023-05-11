@@ -20,26 +20,34 @@ status_code_count = defaultdict(int)
 
 
 try:
+    """ reads lines from stdin"""
     for line in sys.stdin:
-        similar = re.match(input_format, line.strip())
-        if similar:
-            file_size = int(similar.group(5))
+        """check if it matches regex"""
+        match = re.match(input_format, line.strip())
+        if match:
+            """extract status code and file size from similar"""
+            file_size = int(match.group(5))
             total_file_size += file_size
 
-            status_code = similar.group(4)
+            status_code = match.group(4)
             status_code_count[status_code] += 1
 
             line_count += 1
+        else:
+            """skips line if it does not match expected format"""
+            continue
 
-            if line_count % 10 == 0:
-                print('File size:', total_file_size)
-
-                for code in status_codes:
-                    if status_code_count[code] > 0:
-                        print(f'{code}: {status_code_count[code]}')
+        if line_count % 10 == 0:
+            """print total file size every ten lines"""
+            print(f'File size: {total_file_size}')
+            """print lines by status code"""
+            for code in status_codes:
+                if status_code_count[code] > 0:
+                    print(f'{code}: {status_code_count[code]}')
 
 except KeyboardInterrupt:
-    print('File size:', total_file_size)
+    """ Handle keyboard interruption (CTRL + C)"""
+    print(f'File size: {total_file_size}')
 
     for code in status_codes:
         if status_code_count[code] > 0:
