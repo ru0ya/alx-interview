@@ -17,18 +17,19 @@ input_format = (
         r'"GET \/projects\/(\d+) HTTP\/\d\.\d" (\d{3}) (\d+)$'
         )
 status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
+# metric variables
 line_count = 0
 total_file_size = 0
 status_code_count = defaultdict(int)
 
 
 try:
-    """ reads lines from stdin"""
+    # reads lines from stdin
     for line in sys.stdin:
-        """check if it matches regex"""
+        # check if it matches regex
         match = re.match(input_format, line.strip())
         if match:
-            """extract status code and file size from similar"""
+            # extract status code and file size from similar
             file_size = int(match.group(5))
             total_file_size += file_size
 
@@ -37,19 +38,19 @@ try:
 
             line_count += 1
         else:
-            """skips line if it does not match expected format"""
+            # skips line if it does not match expected format
             continue
 
         if line_count % 10 == 0:
-            """print total file size every ten lines"""
+            # print total file size every ten lines
             print(f'File size: {total_file_size}')
-            """print lines by status code"""
+            # print lines by status code
             for code in status_codes:
                 if status_code_count[code] > 0:
                     print(f'{code}: {status_code_count[code]}')
 
 except KeyboardInterrupt:
-    """ Handle keyboard interruption (CTRL + C)"""
+    # Handle keyboard interruption (CTRL + C)
     print(f'File size: {total_file_size}')
 
     for code in status_codes:
