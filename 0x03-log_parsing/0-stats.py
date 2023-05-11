@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """Script that reads stdin line by line and computes metrics"""
 
-
 import sys
 
 
@@ -33,7 +32,9 @@ def compute_metrics(lines):
             if status_code in status_codes:
                 status_codes[status_code] += 1
             file_size += int(data[-1])
-        except:
+        except IndexError:
+            pass
+        except ValueError:
             pass
 
     return status_codes, file_size
