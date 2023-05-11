@@ -12,7 +12,10 @@ import re
 from collections import defaultdict
 
 
-input_format = r'^(\d+\.\d+\.\d+\.\d+) -\[(\d{4}-\d{2}-\d{2})\]"GET\/projects\/(\d+) HTTP\/\d\.\d" (\d{3}) (\d+)$'
+input_format = (
+        r'^(\d{1,3}(?:\.\d{1,3}){3}) -\[(\d{4}-\d{2}-\d{2})]'
+        r'"GET \/projects\/(\d+) HTTP\/\d\.\d" (\d{3}) (\d+)$'
+        )
 status_codes = [200, 301, 400, 401, 403, 404, 405, 500]
 line_count = 0
 total_file_size = 0
