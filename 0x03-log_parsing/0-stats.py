@@ -3,23 +3,32 @@
 interview script
 """
 import sys
+from collections import defaultdict
 import re
-from collections import Counter
-from itertools import groupby
 
 
 def compute_metrics(lines):
     """Compute metrics from the given lines"""
     total_file_size = 0
-    lines_by_status_code = Counter()
+    lines_by_status_code = defaultdict(int)
+    lines_processed = 0
 
     for line in lines:
-        match = re.findall(
+        match = re.match(
                 r'^\S+ - \[\S+\] "GET /projects/260 HTTP/1.1" (\d+) (\d+)$',
                 line)
-        for status_code, file_size in match:
-            total_file_size += int(file_size)
+        if match:
+            status_code = int(match.group(1))
+            file_size = int(match.group(2))
+            total_file_size += file_size
             lines_by_status_code[status_code] += 1
+            lines_processed += 1
+
+        if lines_processed % 10 == 0:
+            print(f"File size: {total_file_size}")
+            for code in status_codes:
+                if lines_by_status_code[code] > 0:
+                    print(f"{code}: {lines_by_status_code[code]}")
 
     return total_file_size, lines_by_status_code
 
@@ -27,10 +36,9 @@ def compute_metrics(lines):
 def print_results(total_file_size, lines_by_status_code):
     """Print final metrics"""
     print(f"File size: {total_file_size}")
-
-    for code, count in lines_by_status_code.items():
-        if count > 0:
-            print(f"{code}: {count}")
+    for code in status_codes:
+        if lines_by_status_code[code] > 0:
+            print(f"{code}: {lines_by_status_code[code]}")
 
 
 if __name__ == '__main__':
