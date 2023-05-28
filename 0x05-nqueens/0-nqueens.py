@@ -60,10 +60,15 @@ def main():
         sys.exit(1)
 
     queens_solutions = nqueens(N)
+    list_solution = []
     for solution in queens_solutions:
+        solution_list = []
         for row, col in solution:
-            print(f"[{row}, {col}]")
+            solution_list.append([col, row])
+        list_solution.append(solution_list)
         print()
+    
+    print(list_solution)
 
 
 if __name__ == '__main__':
