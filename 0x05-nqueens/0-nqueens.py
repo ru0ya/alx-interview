@@ -68,9 +68,7 @@ def main():
         list_solution.append(solution_list)
 
     for solution in list_solution:
-        for position in solution:
-            print(f"[{position[0]:2d}, {position[1]:2d}]", end="")
-        print()
+        print(solution)
 
 
 if __name__ == '__main__':
