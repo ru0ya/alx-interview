@@ -57,9 +57,8 @@ getStarWarsFilms()
     return getCharactersByFilm(film);
   })
   .then(result => {
-    console.log(` ${result.characters.join('\n')}`);
+    console.log(`${result.characters.join('\n')}`);
   })
   .catch(error => {
     console.error('Error:', error);
   });
-
