@@ -1,9 +1,10 @@
 #!/usr/bin/python3
-""" 
+"""
 script that reads stdin line by line and computes metrics
 """
 
 import sys
+
 
 def print_results(statusCodes, fileSize):
     """ Print statistics """
@@ -11,6 +12,7 @@ def print_results(statusCodes, fileSize):
     for statusCode, times in sorted(statusCodes.items()):
         if times:
             print("{:s}: {:d}".format(statusCode, times))
+
 
 def process_logs():
     statusCodes = {"200": 0,
@@ -46,6 +48,7 @@ def process_logs():
         """ Keyboard interruption, print from the beginning """
         print_results(statusCodes, fileSize)
         raise
+
 
 if __name__ == '__main__':
     process_logs()
