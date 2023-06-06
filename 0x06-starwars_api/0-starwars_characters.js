@@ -1,56 +1,39 @@
 #!/usr/bin/node
 const request = require('request');
 
-const getStarWarsFilms = () =>
-  new Promise((resolve, reject) => {
-    request('https://swapi-api.alx-tools.com/api/films', (error, response, body) => {
-      if (error) {
-        reject(error);
-      } else {
-        const { results } = JSON.parse(body);
-        resolve(results);
-      }
-    });
-  });
+if (process.argv.length === 3) {
+  const filmId = process.argv[2];
+  const filmUrl = `https://swapi-api.hbtn.io/api/films/${filmId}/`;
+  const options = { json: true };
 
-const getCharactersByFilm = (film) =>
-  new Promise((resolve, reject) => {
-    const characterPromises = film.characters.map(url =>
-      new Promise((resolve, reject) => {
-        request(url, (error, response, body) => {
-          if (error) {
-            reject(error);
-          } else {
-            const { name } = JSON.parse(body);
-            resolve(name);
-          }
+  request(filmUrl, options, (error, response, filmData) => {
+    if (error) {
+      console.error('Error:', error);
+    } else if (response.statusCode !== 200) {
+      console.error('Error:', response.statusCode, filmData.detail);
+    } else {
+      const characterPromises = filmData.characters.map(characterUrl => {
+        return new Promise((resolve, reject) => {
+          request(characterUrl, options, (error, response, characterData) => {
+            if (error) {
+              reject(error);
+            } else if (response.statusCode !== 200) {
+              reject(new Error(`Error fetching character data: ${response.statusCode} ${characterData.detail}`));
+            } else {
+              resolve(characterData.name);
+            }
+          });
         });
-      })
-    );
+      });
 
-    Promise.all(characterPromises)
-      .then(characters => resolve({ film: film.title, characters }))
-      .catch(reject);
+      Promise.all(characterPromises)
+        .then(characters => {
+          console.log(characters.join('\n'));
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }
   });
-
-const filmId = process.argv[2];
-
-if (!filmId) {
-  console.log('Please provide a film ID as a command-line argument.');
-  process.exit(1);
 }
 
-getStarWarsFilms()
-  .then(films => {
-    const film = films.find(film => film.episode_id === Number(filmId));
-    if (!film) {
-      throw new Error(`Film with ID ${filmId} not found.`);
-    }
-    return getCharactersByFilm(film);
-  })
-  .then(({ characters }) => {
-    console.log(characters.join('\n'));
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
