@@ -18,6 +18,14 @@ def island_perimeter(grid: List[List[int]]) -> int:
     hist = set()
 
     def dfs(i, j):
+        """
+        Defines a depth first search
+
+        Args: i(int) - length of cell
+              j(int) = height of cell
+
+        Returns: cell
+        """
         if i >= len(grid) or j >= len(grid[0]) or \
                 i < 0 or j < 0 or grid[i][j] == 0:
             return 1
