@@ -3,10 +3,8 @@
 Function to solve the island perimeter problem
 """
 
-from typing import List
 
-
-def island_perimeter(grid: List[List[int]]) -> int:
+def island_perimeter(grid):
     """
     Function that calculates the perimeter of a grid
 
