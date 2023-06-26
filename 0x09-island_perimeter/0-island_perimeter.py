@@ -34,9 +34,10 @@ def island_perimeter(grid):
         perim = dfs(i, j + 1)
         perim += dfs(i + 1, j)
         perim += dfs(i - 1, j)
+        perim += dfs(i, j - 1)
         return perim
 
     for i in range(len(grid)):
         for j in range(len(grid[0])):
-            if grid[i][j]:
+            if grid[i][j] == 1:
                 return dfs(i, j)
