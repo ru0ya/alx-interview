@@ -14,6 +14,7 @@ def island_perimeter(grid):
     Returns: Perimeter(int) of a grid
     """
     hist = set()
+    perimeter = 0
 
     def dfs(i, j):
         """
@@ -40,4 +41,6 @@ def island_perimeter(grid):
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             if grid[i][j] == 1:
+                hist = set()
                 return dfs(i, j)
+    return perimeter
