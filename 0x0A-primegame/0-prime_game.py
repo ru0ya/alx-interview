@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+"""Function to solve the Prime Game problem"""
 
 
 def is_prime(n):
