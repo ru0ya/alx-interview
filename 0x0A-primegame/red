@@ -42,24 +42,27 @@ def isWinner(x, nums):
     primes = sieve_of_er(max_n)
 
     for n in nums:
-        current_player = "Maria"
         numbers = set(range(1, n + 1))
-        primes_copy = primes.copy()
+        current_player = "Maria"
 
-        while primes_copy:
-            prime = primes_copy.pop(0)
+        while primes:
+            prime = primes.pop(0)
             multiples = set(range(prime, n + 1, prime))
             numbers -= multiples
             if not numbers:
                 break
 
-            current_player = "Ben" if current_player == "Maria" else \
-                "Maria"
-
+            current_player = "Ben" if current_player != "Maria" else "Maria"
+                
+        
         if current_player == "Maria":
             maria_wins += 1
         else:
             ben_wins += 1
+
+
+    print("maria_wins:", maria_wins)
+    print("ben_wins:", ben_wins)
 
     if maria_wins > ben_wins:
         return "Maria"

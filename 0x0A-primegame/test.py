@@ -33,7 +33,7 @@ def isWinner(x, nums):
     Args: x(int) - number of rounds for each player
           nums(int) - an array of n
 
-    Returns: Winners name else returns none
+    Returns: Winners name else returns false
     """
     maria_wins = 0
     ben_wins = 0
@@ -42,19 +42,17 @@ def isWinner(x, nums):
     primes = sieve_of_er(max_n)
 
     for n in nums:
-        current_player = "Maria"
         numbers = set(range(1, n + 1))
-        primes_copy = primes.copy()
+        current_player = "Maria"
 
-        while primes_copy:
-            prime = primes_copy.pop(0)
+        while primes:
+            prime = primes.pop(0)
             multiples = set(range(prime, n + 1, prime))
             numbers -= multiples
-            if not numbers:
+            if not multiples.intersection(numbers):
                 break
 
-            current_player = "Ben" if current_player == "Maria" else \
-                "Maria"
+            current_player = "Ben" if current_player != "Maria" else "Maria"
 
         if current_player == "Maria":
             maria_wins += 1
@@ -66,4 +64,4 @@ def isWinner(x, nums):
     elif maria_wins < ben_wins:
         return "Ben"
     else:
-        return None
+        return False
